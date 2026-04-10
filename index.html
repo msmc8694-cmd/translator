@@ -1,0 +1,25 @@
+<h1>English → Arabic Translator</h1><textarea id="inputText" placeholder="Enter English text..."></textarea><br><br>
+
+<button onclick="translateText()">Translate</button>
+
+<br><br>
+
+<textarea id="outputText" placeholder="Arabic translation..." readonly></textarea>body {
+text-align: center;
+font-family: Arial;
+}
+
+textarea {
+width: 80%;
+height: 100px;
+}async function translateText() {
+let text = document.getElementById("inputText").value;
+
+let response = await fetch("https://api.mymemory.translated.net/get?q="
++ encodeURIComponent(text) + "&langpair=en|ar");
+
+let data = await response.json();
+
+document.getElementById("outputText").value =
+data.responseData.translatedText;
+}
