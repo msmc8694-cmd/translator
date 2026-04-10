@@ -1,25 +1,66 @@
-<h1>English → Arabic Translator</h1><textarea id="inputText" placeholder="Enter English text..."></textarea><br><br>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Translator</title>
 
-<button onclick="translateText()">Translate</button>
-
-<br><br>
-
-<textarea id="outputText" placeholder="Arabic translation..." readonly></textarea>body {
-text-align: center;
-font-family: Arial;
+<style>
+body {
+  font-family: Arial;
+  text-align: center;
+  background: #f2f2f2;
+  padding: 40px;
 }
 
 textarea {
-width: 80%;
-height: 100px;
-}async function translateText() {
-let text = document.getElementById("inputText").value;
-
-let response = await fetch("https://api.mymemory.translated.net/get?q="
-+ encodeURIComponent(text) + "&langpair=en|ar");
-
-let data = await response.json();
-
-document.getElementById("outputText").value =
-data.responseData.translatedText;
+  width: 80%;
+  height: 120px;
+  margin: 10px;
+  padding: 10px;
+  font-size: 16px;
 }
+
+button {
+  padding: 10px 20px;
+  background: blue;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h1>English → Arabic Translator</h1>
+
+<textarea id="inputText" placeholder="Enter English text"></textarea>
+<br>
+
+<button onclick="translateText()">Translate</button>
+
+<br>
+
+<textarea id="outputText" placeholder="Result" readonly></textarea>
+
+<script>
+async function translateText() {
+  let text = document.getElementById("inputText").value;
+
+  if(text.trim() === "") return;
+
+  let response = await fetch(
+    "https://api.mymemory.translated.net/get?q=" +
+    encodeURIComponent(text) +
+    "&langpair=en|ar"
+  );
+
+  let data = await response.json();
+
+  document.getElementById("outputText").value =
+    data.responseData.translatedText;
+}
+</script>
+
+</body>
+</html>
